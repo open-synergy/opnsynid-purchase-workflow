@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="purchase_term_view_tree" model="ir.ui.view">
+    <field name="name">Tree Purchase Term</field>
+    <field name="model">purchase.term</field>
+    <field name="arch" type="xml">
+        <tree string="Purchase Term">
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="purchase_term_view_form" model="ir.ui.view">
+    <field name="name">Form Purchase Term</field>
+    <field name="model">purchase.term</field>
+    <field name="arch" type="xml">
+        <form string="Purchase Term">
+            <group name="group_1" colspan="4" col="2">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+                <label for="description"/>
+                <field name="description" nolabel="1"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="purchase_term_action" model="ir.actions.act_window">
+    <field name="name">Purchase Term</field>
+    <field name="res_model">purchase.term</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem id="purchase_term_menu"
+    parent="purchase.menu_purchase_config_purchase"
+    name="Purchase Terms"
+    action="purchase_term_action"
+    sequence="99"/>
+
+</data>
+</openerp>
