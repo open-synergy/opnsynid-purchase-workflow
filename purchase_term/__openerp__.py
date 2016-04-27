@@ -2,8 +2,8 @@
 # © 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Purchase Order Line Term",
-    "summary": "Add terms to purchase order line",
+    "name": "Purchase Term",
+    "summary": "Manage Purchase Terms",
     "version": "8.0.1.0.0",
     "category": "Purchase",
     "website": "https://opensynergy-indonesia.com",
@@ -12,9 +12,10 @@
     "application": False,
     "installable": True,
     "depends": [
-        "purchase_term",
+        "purchase",
     ],
     "data": [
-        "views/purchase_order_views.xml",
+        "security/ir.model.access.csv",
+        "views/purchase_term_views.xml",
     ],
 }
