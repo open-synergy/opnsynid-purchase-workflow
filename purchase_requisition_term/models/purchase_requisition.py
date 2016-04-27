@@ -9,7 +9,6 @@ class PurchaseRequisitionLine(models.Model):
     _inherit = "purchase.requisition.line"
 
 
-
 class PurchaseRequisition(models.Model):
     _inherit = "purchase.requisition"
 
