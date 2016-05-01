@@ -9,10 +9,10 @@ class PurchaseTerm(models.Model):
     _name = "purchase.term"
     _description = "Purchase Term"
 
-    @api.multi
+    @api.one
+    @api.depends("code")
     def _compute_name(self):
-        for term in self:
-            term.display_name = term.code
+        self.display_name = self.code
 
     name = fields.Char(
         string="Term",
