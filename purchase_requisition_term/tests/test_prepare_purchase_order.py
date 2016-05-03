@@ -47,7 +47,7 @@ class TestPreparePurchaseOrder(TransactionCase):
 
     def test_prepare_purchase_order(self):
         x = []
-        #Create Purchase Requisition
+        # Create Purchase Requisition
         data_purchase_requisition = self._prepare_purchase_requisition()
         purchase_requisition = self.obj_purchase_requisition.\
             create(data_purchase_requisition)
