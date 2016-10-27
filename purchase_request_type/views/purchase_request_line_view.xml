@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+    <data>
+
+        <record id="purchase_request_line_view_tree" model="ir.ui.view">
+            <field name="name">Purchase Request Line Type Tree</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.purchase_request_line_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='request_id']" position="after">
+                    <field name="order_type_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_request_line_view_search" model="ir.ui.view">
+            <field name="name">Purchase Request Line Type Search</field>
+            <field name="model">purchase.request.line</field>
+            <field name="inherit_id" ref="purchase_request.purchase_request_line_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='procurement_id']" position="after">
+                    <field name="order_type_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

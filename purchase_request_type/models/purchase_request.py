@@ -25,3 +25,15 @@ class PurchaseRequest(models.Model):
         ondelete='restrict',
         default=_default_order_type
     )
+
+
+class PurchaseRequestLine(models.Model):
+    _inherit = "purchase.request.line"
+
+    order_type_id = fields.Many2one(
+        comodel_name='purchase.order.type',
+        string='Type',
+        related='request_id.order_type_id',
+        store=True,
+        readonly=True,
+    )
