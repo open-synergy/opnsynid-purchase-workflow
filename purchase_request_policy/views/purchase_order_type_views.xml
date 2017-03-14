@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_order_type_view_form" model="ir.ui.view">
+            <field name="name">Purchase Order Type Policy Form</field>
+            <field name="model">purchase.order.type</field>
+            <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='grp_1']" position="after">
+                    <group name="grp_policy" string="Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
+                        <field name="request_group_ids" widget="many2many_tags"/>
+                        <field name="approve_group_ids" widget="many2many_tags"/>
+                        <field name="reject_group_ids" widget="many2many_tags"/>
+                        <field name="reset_group_ids" widget="many2many_tags"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_request_view_form" model="ir.ui.view">
+            <field name="name">Purchase Request Form</field>
+            <field name="model">purchase.request</field>
+            <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="page_policy" string="Policy" groups="base.group_system">
+                            <group name="grp_policy_1">
+                                <field name="request_ok"/>
+                                <field name="approve_ok"/>
+                                <field name="reject_ok"/>
+                                <field name="reset_ok"/>
+                            </group>
+                        </page>
+                    </xpath>
+
+                    <xpath expr="//button[@name='button_to_approve']" position="attributes">
+                        <attribute name="groups"/>
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','draft'),'&amp;',('state','=','draft'),('request_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='button_approved']" position="attributes">
+                        <attribute name="groups"/>
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','to_approve'),'&amp;',('state','=','to_approve'),('approve_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='button_rejected']" position="attributes">
+                        <attribute name="groups"/>
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','not in',['to_approve','approved']),'&amp;',('state','in',['to_approve','approved']),('reject_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='button_draft']" position="attributes">
+                        <attribute name="groups"/>
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','not in',['to_approve','approved','rejected']),'&amp;',('state','in',['to_approve','approved','rejected']),('reset_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>
