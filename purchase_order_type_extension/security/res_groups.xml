@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="group_hide_partner_menu" model="res.groups">
+    <field name="name">Show Original Partner's Related Menus</field>
+    <field name="category_id" ref="base.group_no_one"/>
+</record>
+</data>
+</openerp>
