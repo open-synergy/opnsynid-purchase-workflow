@@ -89,6 +89,9 @@ class TestPurchaseRequestTypeToRfq(common.TransactionCase):
         data_pr_lines = self._prepare_purchase_request_lines(pr_1.id)
         pr_line_1 = self.purchase_request_line.create(data_pr_lines)
 
+        pr_1.button_to_approve()
+        pr_1.button_approved()
+
         # Create Purchase Request - 2
         data_pr_2 = self._prepare_purchase_request_2()
         pr_2 = self.purchase_request.create(data_pr_2)
@@ -96,6 +99,9 @@ class TestPurchaseRequestTypeToRfq(common.TransactionCase):
         # Create Purchase Request Lines - 2
         data_pr_lines_2 = self._prepare_purchase_request_lines_2(pr_2.id)
         pr_line_2 = self.purchase_request_line.create(data_pr_lines_2)
+
+        pr_2.button_to_approve()
+        pr_2.button_approved()
 
         # Create Wizard
         active_ids = [pr_line_1.id]
@@ -120,6 +126,9 @@ class TestPurchaseRequestTypeToRfq(common.TransactionCase):
         # Create Purchase Request Lines
         data_pr_lines = self._prepare_purchase_request_lines(pr.id)
         pr_line = self.purchase_request_line.create(data_pr_lines)
+
+        pr.button_to_approve()
+        pr.button_approved()
 
         # Check fields_view_get
         self.check_fields_view_get(pr_line.id)
