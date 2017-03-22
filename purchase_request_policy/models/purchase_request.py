@@ -25,15 +25,14 @@ class PurchaseRequest(models.Model):
                 purchase_req.reject_ok = True
                 purchase_req.reset_ok = True
                 continue
-            else:
-                purchase_req.request_ok = False
-                purchase_req.approve_ok = False
-                purchase_req.reject_ok = False
-                purchase_req.reset_ok = False
 
             purchase_req_id = purchase_req.order_type_id.id
 
             if not purchase_req_id:
+                purchase_req.request_ok = True
+                purchase_req.approve_ok = True
+                purchase_req.reject_ok = True
+                purchase_req.reset_ok = True
                 continue
 
             purchase_req_type =\
