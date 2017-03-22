@@ -150,10 +150,26 @@ class TestComputePolicy(TransactionCase):
 
         # Condition :
         #   1. No Purchase Request Type
-        self.assertEqual(True, purchase_request.request_ok)
-        self.assertEqual(True, purchase_request.approve_ok)
-        self.assertEqual(True, purchase_request.reject_ok)
-        self.assertEqual(True, purchase_request.reset_ok)
+        self.assertEqual(
+            True,
+            purchase_request.sudo(
+                self.user_1.id).request_ok
+        )
+        self.assertEqual(
+            True,
+            purchase_request.sudo(
+                self.user_1.id).approve_ok
+        )
+        self.assertEqual(
+            True,
+            purchase_request.sudo(
+                self.user_1.id).reject_ok
+        )
+        self.assertEqual(
+            True,
+            purchase_request.sudo(
+                self.user_1.id).reset_ok
+        )
 
     def test_compute_case_1(self):
         # Create Purchase Request
