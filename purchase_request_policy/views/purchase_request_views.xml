@@ -21,7 +21,7 @@
                     <xpath expr="//button[@name='button_to_approve']" position="attributes">
                         <attribute name="groups"/>
                         <attribute name="attrs">
-                            {'invisible':['|',('state','!=','draft'),'&amp;',('state','=','draft'),('request_ok','=',False)]}
+                            {'invisible':['|',('state','!=','draft'),('request_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                     </xpath>
@@ -29,7 +29,7 @@
                     <xpath expr="//button[@name='button_approved']" position="attributes">
                         <attribute name="groups"/>
                         <attribute name="attrs">
-                            {'invisible':['|',('state','!=','to_approve'),'&amp;',('state','=','to_approve'),('approve_ok','=',False)]}
+                            {'invisible':['|',('state','!=','to_approve'),('approve_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                     </xpath>
@@ -37,7 +37,7 @@
                     <xpath expr="//button[@name='button_rejected']" position="attributes">
                         <attribute name="groups"/>
                         <attribute name="attrs">
-                            {'invisible':['|',('state','not in',['to_approve','approved']),'&amp;',('state','in',['to_approve','approved']),('reject_ok','=',False)]}
+                            {'invisible':['|',('state','not in',['to_approve','approved']),('reject_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                     </xpath>
@@ -45,7 +45,7 @@
                     <xpath expr="//button[@name='button_draft']" position="attributes">
                         <attribute name="groups"/>
                         <attribute name="attrs">
-                            {'invisible':['|',('state','not in',['to_approve','approved','rejected']),'&amp;',('state','in',['to_approve','approved','rejected']),('reset_ok','=',False)]}
+                            {'invisible':['|',('state','not in',['to_approve','approved','rejected']),('reset_ok','=',False)]}
                         </attribute>
                         <attribute name="states"/>
                     </xpath>
