@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_order_view_form" model="ir.ui.view">
+            <field name="name">Purchase Order Form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="page_order_policy" string="Policy" groups="base.group_system">
+                            <group name="grp_policy_order">
+                                <field name="bid_ok"/>
+                                <field name="send_emailrfq_ok"/>
+                                <field name="resend_emailrfq_ok"/>
+                                <field name="confirm_order_ok"/>
+                                <field name="manually_picking_ok"/>
+                                <field name="manually_invoice_ok"/>
+                                <field name="approve_order_ok"/>
+                                <field name="send_emailpo_ok"/>
+                                <field name="receive_prod_ok"/>
+                                <field name="receive_inv_ok"/>
+                                <field name="settodraft_order_ok"/>
+                                <field name="cancel_order_ok"/>
+                            </group>
+                        </page>
+                    </xpath>
+
+                    <xpath expr="//button[@name='bid_received']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','sent'),('bid_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='wkf_send_rfq'][1]" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','draft'),('send_emailrfq_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='wkf_send_rfq'][2]" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','sent'),('resend_emailrfq_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='wkf_send_rfq'][3]" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','approved'),('send_emailpo_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='purchase_confirm'][1]" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','draft'),('confirm_order_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='purchase_confirm'][2]" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','bid'),('confirm_order_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='picking_ok']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','except_picking'),('manually_picking_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='invoice_ok']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','except_invoice'),('manually_invoice_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='purchase_approve']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','confirmed'),('approve_order_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                        <attribute name="groups"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='view_picking']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible': ['|', '|',('shipped','=',True),('state','!=', 'approved'),('receive_prod_ok', '=', False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='view_invoice']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible': ['|', '|', ('invoice_method','in', ['picking', 'manual']), '|', ('state','!=', 'approved'), ('invoiced','=',True),('receive_inv_ok', '=', False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='action_cancel_draft']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','not in',['cancel','sent','confirmed']),('settodraft_order_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='action_cancel']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','not in',['draft', 'confirmed', 'sent', 'bid', 'approved', 'except_picking','except_invoice']),('cancel_order_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>
