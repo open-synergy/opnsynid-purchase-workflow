@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<record id="purchase_order_type_view_form" model="ir.ui.view">
+    <field name="name">Purchase Order Type Form</field>
+    <field name="model">purchase.order.type</field>
+    <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//group[@name='grp_1']" position="after">
+            <group name="grp_picking_type_policy" colspan="4" col="2" string="Picking Type Policy">
+                <field name="limit_picking_type_selection"/>
+                <label for="allowed_picking_type_ids" colspan="2"/>
+                <field name="allowed_picking_type_ids" nolabel="1" colspan="2"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+</data>
+</openerp>
