@@ -16,7 +16,7 @@ To install this module, you need to:
 2.  Add the path to this repository in your configuration (addons-path)
 3.  Update the module list
 4.  Go to menu *Setting -> Modules -> Local Modules*
-5.  Search For *Purchase Order Type Product Policy*
+5.  Search For *Purchase Order Product Policy*
 6.  Install the module
 
 Configuration
