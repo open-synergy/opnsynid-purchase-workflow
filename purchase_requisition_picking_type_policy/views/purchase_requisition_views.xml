@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 2017 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="purchase_requisition_view_form" model="ir.ui.view">
+    <field name="name">Purchase Requisition</field>
+    <field name="model">purchase.requisition</field>
+    <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='picking_type_id']" position="after">
+            <field name="allowed_picking_type_ids" invisible="1"/>
+        </xpath>
+
+        <xpath expr="//field[@name='picking_type_id']" position="attributes">
+            <attribute name="domain">[('id', 'in', allowed_picking_type_ids[0][2])]</attribute>
+        </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
