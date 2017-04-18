@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="purchase_requisition_view_form" model="ir.ui.view">
+            <field name="name">Purchase Requisisiton Form</field>
+            <field name="model">purchase.requisition</field>
+            <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//notebook" position="inside">
+                        <page name="page_requisition_policy" string="Policy" groups="base.group_system">
+                            <group name="grp_policy_requisition">
+                                <field name="sent_supplier_ok"/>
+                                <field name="open_bid_ok"/>
+                                <field name="tender_reset_ok"/>
+                                <field name="open_product_ok"/>
+                                <field name="generate_po_ok"/>
+                                <field name="cancel_requisition_ok"/>
+                            </group>
+                        </page>
+                    </xpath>
+
+                    <xpath expr="//button[@name='sent_suppliers']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','draft'),('sent_supplier_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='open_bid']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','in_progress'),('open_bid_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='tender_reset']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','cancel'),('tender_reset_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='open_product_line']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','open'),('open_product_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                        <attribute name="groups"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='generate_po']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','!=','open'),('generate_po_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                    <xpath expr="//button[@name='cancel_requisition']" position="attributes">
+                        <attribute name="attrs">
+                            {'invisible':['|',('state','not in',['draft','in_progress']),('cancel_requisition_ok','=',False)]}
+                        </attribute>
+                        <attribute name="states"/>
+                    </xpath>
+
+                </data>
+            </field>
+        </record>
+    </data>
+</openerp>
