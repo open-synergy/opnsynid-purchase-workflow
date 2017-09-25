@@ -11,7 +11,7 @@ class PurchaseOrderType(models.Model):
     @api.depends(
         "allowed_product_categ_ids",
         "allowed_product_ids",
-        "allowed_product_ids.purchase_ok")
+    )
     def _compute_all_allowed_product_ids(self):
         obj_product = self.env["product.product"]
         for po_type in self:
@@ -30,14 +30,17 @@ class PurchaseOrderType(models.Model):
     allowed_product_categ_ids = fields.Many2many(
         string="Allowed Product Categories",
         comodel_name="product.category",
+        relation="product_category_purchase_order_type_rel",
+        column1="purchase_order_type_id",
+        column2="product_category_id",
     )
     allowed_product_ids = fields.Many2many(
         string="Allowed Product",
         comodel_name="product.product",
         domain=[("purchase_ok", "=", True)],
         relation="rel_po_type_2_product",
-        col1="type_id",
-        col2="product_id",
+        column1="purchase_order_type_id",
+        column2="product_product_id",
     )
     all_allowed_product_ids = fields.Many2many(
         string="All Allowed Product",
@@ -45,6 +48,6 @@ class PurchaseOrderType(models.Model):
         compute="_compute_all_allowed_product_ids",
         store=True,
         relation="rel_po_type_2_all_product",
-        col1="type_id",
-        col2="product_id",
+        column1="purchase_order_type_id",
+        column2="product_product_id",
     )
