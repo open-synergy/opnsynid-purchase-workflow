@@ -4,9 +4,9 @@
 <record id="purchase_order_type_view_form" model="ir.ui.view">
     <field name="name">Purchase Order Type Form</field>
     <field name="model">purchase.order.type</field>
-    <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
+    <field name="inherit_id" ref="purchase_order_policy.purchase_order_type_view_form"/>
     <field name="arch" type="xml">
-        <xpath expr="//group[@name='grp_1']" position="after">
+        <xpath expr="//page[@name='page_po_policy']" position="inside">
             <group name="grp_picking_type_policy" colspan="4" col="2" string="Picking Type Policy">
                 <field name="limit_picking_type_selection"/>
                 <label for="allowed_picking_type_ids" colspan="2"/>
