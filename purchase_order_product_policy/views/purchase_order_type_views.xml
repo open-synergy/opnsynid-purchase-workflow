@@ -6,16 +6,18 @@
     <field name="model">purchase.order.type</field>
     <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
     <field name="arch" type="xml">
-        <xpath expr="//group[@name='grp_1']" position="after">
-            <group name="grp_product_policy" colspan="4" col="2" string="Product Policy">
-                <field name="limit_product_selection"/>
-                <label for="allowed_product_categ_ids" colspan="2"/>
-                <field name="allowed_product_categ_ids" nolabel="1" colspan="2"/>
-                <label for="allowed_product_ids"  colspan="2"/>
-                <field name="allowed_product_ids" nolabel="1" colspan="2"/>
-                <label for="all_allowed_product_ids" colspan="2"/>
-                <field name="all_allowed_product_ids" nolabel="1" colspan="2"/>
-            </group>
+        <xpath expr="//notebook" position="inside">
+            <page name="page_product_policy" string="Product Policy">
+                <group name="grp_product_policy" colspan="4" col="2" string="Product Policy">
+                    <field name="limit_product_selection"/>
+                    <label for="allowed_product_categ_ids" colspan="2"/>
+                    <field name="allowed_product_categ_ids" nolabel="1" colspan="2"/>
+                    <label for="allowed_product_ids"  colspan="2"/>
+                    <field name="allowed_product_ids" nolabel="1" colspan="2"/>
+                    <label for="all_allowed_product_ids" colspan="2"/>
+                    <field name="all_allowed_product_ids" nolabel="1" colspan="2"/>
+                </group>
+            </page>
         </xpath>
     </field>
 </record>
