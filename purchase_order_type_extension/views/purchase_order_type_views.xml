@@ -11,6 +11,7 @@
                         <field name="active"/>
                         <field name="invoice_method"/>
                     </group>
+                    <notebook/>
                 </form>
             </field>
         </record>

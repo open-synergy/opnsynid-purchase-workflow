@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Purchase Order Type Extension",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.1.0",
     "category": "Partner",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
