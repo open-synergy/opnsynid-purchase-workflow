@@ -6,13 +6,15 @@
             <field name="model">purchase.order.type</field>
             <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='grp_1']" position="after">
-                    <group name="grp_policy" string="Purchase Request Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
-                        <field name="request_group_ids" widget="many2many_tags"/>
-                        <field name="approve_group_ids" widget="many2many_tags"/>
-                        <field name="reject_group_ids" widget="many2many_tags"/>
-                        <field name="reset_group_ids" widget="many2many_tags"/>
-                    </group>
+                <xpath expr="//notebook" position="inside">
+                    <page name="page_purchase_request" string="Purchase Request Policy">
+                        <group name="grp_policy" string="Purchase Request Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
+                            <field name="request_group_ids" widget="many2many_tags"/>
+                            <field name="approve_group_ids" widget="many2many_tags"/>
+                            <field name="reject_group_ids" widget="many2many_tags"/>
+                            <field name="reset_group_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
                 </xpath>
             </field>
         </record>
