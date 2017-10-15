@@ -6,15 +6,17 @@
             <field name="model">purchase.order.type</field>
             <field name="inherit_id" ref="purchase_order_type_extension.purchase_order_type_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//group[@name='grp_1']" position="after">
-                    <group name="grp_policy_requisition" string="Purchase Requisition Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
-                        <field name="sent_supplier_group_ids" widget="many2many_tags"/>
-                        <field name="open_bid_group_ids" widget="many2many_tags"/>
-                        <field name="tender_reset_group_ids" widget="many2many_tags"/>
-                        <field name="open_product_group_ids" widget="many2many_tags"/>
-                        <field name="generate_po_group_ids" widget="many2many_tags"/>
-                        <field name="cancel_requisition_group_ids" widget="many2many_tags"/>
-                    </group>
+                <xpath expr="//notebook" position="inside">
+                    <page name="page_purchase_requisition" string="Purchase Requisition Policy">
+                        <group name="grp_policy_requisition" string="Purchase Requisition Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
+                            <field name="sent_supplier_group_ids" widget="many2many_tags"/>
+                            <field name="open_bid_group_ids" widget="many2many_tags"/>
+                            <field name="tender_reset_group_ids" widget="many2many_tags"/>
+                            <field name="open_product_group_ids" widget="many2many_tags"/>
+                            <field name="generate_po_group_ids" widget="many2many_tags"/>
+                            <field name="cancel_requisition_group_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
                 </xpath>
             </field>
         </record>
