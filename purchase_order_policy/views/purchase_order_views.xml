@@ -121,5 +121,26 @@
                 </data>
             </field>
         </record>
+
+        <record id="purchase_order_view_form_1" model="ir.ui.view">
+            <field name="name">Purchase Order Form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase_order_type.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="//field[@name='order_type']" position="attributes">
+                        <attribute name="context">{'limit_po_type_usage': True}</attribute>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="purchase.purchase_form_action" model="ir.actions.act_window">
+            <field name="context">{'po_policy': True}</field>
+        </record>
+
+        <record id="purchase.purchase_rfq" model="ir.actions.act_window">
+            <field name="context">{'po_policy': True}</field>
+        </record>
     </data>
 </openerp>

@@ -2,11 +2,22 @@
 # Copyright 2017 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields
+from openerp import models, fields, api
 
 
 class PurchaseOrderType(models.Model):
     _inherit = "purchase.order.type"
+
+    limit_usage_on_po = fields.Boolean(
+        string="Limit Usage on PO",
+    )
+    allowed_usage_po_group_ids = fields.Many2many(
+        string="Allowed Groups",
+        comodel_name="res.groups",
+        relation="po_type_usage_group_rel",
+        column1="po_type_id",
+        column2="group_id",
+    )
 
     bid_group_ids = fields.Many2many(
         string="Allowed to Bid Received",
@@ -92,3 +103,35 @@ class PurchaseOrderType(models.Model):
         col1="type_id",
         col2="group_id",
     )
+
+    @api.model
+    def _search(
+            self, args, offset=0, limit=None,
+            order=None, count=False, access_rights_uid=None):
+        _super = super(PurchaseOrderType, self)
+        limit_type_usage = self._context.get("limit_po_type_usage", False)
+        if limit_type_usage:
+            policy_result = self._get_po_type_usage_policy_domain()
+            args += policy_result
+        result = _super._search(
+            args, offset=offset, limit=limit, order=order,
+            count=count, access_rights_uid=access_rights_uid)
+        return result
+
+    @api.model
+    def _get_po_type_usage_policy_domain(self):
+        po_type_ids = []
+        group_ids = tuple(self.env.user.groups_id.ids)
+        strSql = """
+            SELECT po_type_id
+            FROM po_type_usage_group_rel
+            WHERE group_id IN %s
+            """ % (str(group_ids))
+        self.env.cr.execute(strSql)
+        sql_result = self.env.cr.fetchall()
+        for po_type_id in sql_result:
+            po_type_ids.append(po_type_id[0])
+        result = [
+            "|", ("limit_usage_on_po", "=", False),
+            ("id", "in", po_type_ids)]
+        return result

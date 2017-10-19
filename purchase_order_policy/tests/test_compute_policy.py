@@ -7,6 +7,7 @@ from datetime import datetime
 
 
 class TestComputeOrderPolicy(TransactionCase):
+
     def setUp(self, *args, **kwargs):
         super(TestComputeOrderPolicy, self).setUp(*args, **kwargs)
         # Objects

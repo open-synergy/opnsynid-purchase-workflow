@@ -8,6 +8,10 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook" position="inside">
                     <page name="page_po_policy" string="Purchase Order Policy">
+                        <group name="grp_po_usage_policy" string="Usage Policy" colspan="4" col="2">
+                            <field name="limit_usage_on_po"/>
+                            <field name="allowed_usage_po_group_ids" widget="many2many_tags"/>
+                        </group>
                         <group name="grp_policy_order" string="Purchase Order Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
                             <field name="bid_group_ids" widget="many2many_tags"/>
                             <field name="send_emailrfq_group_ids" widget="many2many_tags"/>

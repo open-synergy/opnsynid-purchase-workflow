@@ -183,3 +183,66 @@ class PurchaseOrder(models.Model):
         compute="_compute_policy",
         store=False,
     )
+    order_type = fields.Many2one(
+        default=lambda self: self._default_order_type(),
+    )
+
+    @api.model
+    def _default_order_type(self):
+        return False
+
+    @api.model
+    def _search(
+            self, args, offset=0, limit=None, order=None,
+            count=False, access_rights_uid=None):
+        _super = super(PurchaseOrder, self)
+        limit_po_policy = self._context.get("po_policy", False)
+        if limit_po_policy:
+            policy_result = self._get_po_policy_domain()
+            args += policy_result
+        result = _super._search(
+            args, offset=offset, limit=limit, order=order,
+            count=count, access_rights_uid=access_rights_uid)
+        return result
+
+    @api.model
+    def _get_po_policy_domain(self):
+        group_ids = tuple(self.env.user.groups_id.ids)
+        strSql = """
+            SELECT po_type_id
+            FROM po_type_usage_group_rel
+            WHERE group_id IN %s
+            """ % (str(group_ids))
+        self.env.cr.execute(strSql)
+        sql_result = self.env.cr.fetchall()
+        num_policy = len(sql_result)
+        if num_policy > 0:
+            result = ["|", ("order_type.limit_usage_on_po", "=", False)]
+            for policy in range(0, num_policy - 1):
+                result.append("|")
+        else:
+            result = [("order_type.limit_usage_on_po", "=", False)]
+            result.append("|")
+        for policy in range(0, num_policy):
+            result = self._prepare_po_policy_domain(
+                sql_result[policy][0], result)
+        return result
+
+    @api.model
+    def _prepare_po_policy_domain(self, type_id, domain):
+        domain.append(("order_type", "=", type_id))
+        return domain
+
+    @api.model
+    def read_group(
+            self, domain, fields, groupby, offset=0, limit=None,
+            orderby=False, lazy=True):
+        _super = super(PurchaseOrder, self)
+        limit_po_policy = self._context.get("po_policy", False)
+        if limit_po_policy:
+            policy_result = self._get_po_policy_domain()
+            domain += policy_result
+        result = _super.read_group(
+            domain=domain, fields=fields, groupby=groupby,
+            offset=offset, limit=limit, orderby=orderby, lazy=lazy)
+        return result
