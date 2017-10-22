@@ -208,24 +208,26 @@ class PurchaseOrder(models.Model):
     @api.model
     def _get_po_policy_domain(self):
         group_ids = tuple(self.env.user.groups_id.ids)
-        strSql = """
-            SELECT po_type_id
-            FROM po_type_usage_group_rel
-            WHERE group_id IN %s
-            """ % (str(group_ids))
-        self.env.cr.execute(strSql)
-        sql_result = self.env.cr.fetchall()
-        num_policy = len(sql_result)
-        if num_policy > 0:
-            result = ["|", ("order_type.limit_usage_on_po", "=", False)]
-            for policy in range(0, num_policy - 1):
-                result.append("|")
-        else:
-            result = [("order_type.limit_usage_on_po", "=", False)]
-            result.append("|")
-        for policy in range(0, num_policy):
-            result += self._prepare_po_policy_domain(
-                sql_result[policy][0])
+        obj_type = self.env["purchase.order.type"]
+        type_ids = []
+        result = []
+        criteria = [
+            ("limit_usage_on_po", "=", False),
+        ]
+        type_ids += obj_type.search(criteria).ids
+        criteria2 = [
+            ("limit_usage_on_po", "=", True),
+        ]
+        for purchase_type in obj_type.search(criteria2):
+            for group in purchase_type.allowed_group_ids:
+                if group.id in group_ids:
+                    type_ids.append(purchase_type.id)
+        for type_count in range(0, len(type_ids)):
+            dom = self._prepare_po_policy_domain(
+                type_ids[type_count])
+            if type_count > 0:
+                result.insert(0, "|")
+            result += dom
         return result
 
     @api.model
