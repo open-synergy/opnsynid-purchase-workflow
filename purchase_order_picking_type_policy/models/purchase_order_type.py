@@ -18,3 +18,32 @@ class PurchaseOrderType(models.Model):
         col1="type_id",
         col2="picking_type_id",
     )
+    limit_picking_type_on_po = fields.Boolean(
+        string="Limit Picking Type Selection on PO",
+    )
+    po_picking_type_policy_ids = fields.One2many(
+        string="PO's Picking Type Policy",
+        comodel_name="purchase.type_po_picking_type_policy",
+        inverse_name="purchase_type_id",
+    )
+
+
+class PurchaseOrderTypePickingTypePolicy(models.Model):
+    _name = "purchase.type_po_picking_type_policy"
+    _description = "PO's Type Picking Type Policy"
+
+    purchase_type_id = fields.Many2one(
+        string="Purchase Type",
+        comodel_name="purchase.order.type",
+    )
+    picking_type_id = fields.Many2one(
+        string="Picking Type",
+        comodel_name="stock.picking.type",
+    )
+    allowed_group_ids = fields.Many2many(
+        string="Allowed Groups",
+        comodel_name="res.groups",
+        relation="po_type_picking_type_policy_rel",
+        column1="policy_id",
+        column2="group_id",
+    )
