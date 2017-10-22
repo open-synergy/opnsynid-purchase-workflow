@@ -219,7 +219,7 @@ class PurchaseOrder(models.Model):
             ("limit_usage_on_po", "=", True),
         ]
         for purchase_type in obj_type.search(criteria2):
-            for group in purchase_type.allowed_group_ids:
+            for group in purchase_type.allowed_usage_po_group_ids:
                 if group.id in group_ids:
                     type_ids.append(purchase_type.id)
         for type_count in range(0, len(type_ids)):
