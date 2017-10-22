@@ -224,14 +224,14 @@ class PurchaseOrder(models.Model):
             result = [("order_type.limit_usage_on_po", "=", False)]
             result.append("|")
         for policy in range(0, num_policy):
-            result = self._prepare_po_policy_domain(
-                sql_result[policy][0], result)
+            result += self._prepare_po_policy_domain(
+                sql_result[policy][0])
         return result
 
     @api.model
-    def _prepare_po_policy_domain(self, type_id, domain):
-        domain.append(("order_type", "=", type_id))
-        return domain
+    def _prepare_po_policy_domain(self, type_id):
+        result = [("order_type", "=", type_id)]
+        return result
 
     @api.model
     def read_group(
