@@ -9,12 +9,6 @@
         <xpath expr="//page[@name='page_po_policy']" position="inside">
             <group name="grp_po_picking_type_policy" colspan="4" col="2" string="Picking Type Policy">
                 <field name="limit_picking_type_on_po"/>
-                <field name="po_picking_type_policy_ids">
-                    <tree editable="bottom">
-                        <field name="picking_type_id"/>
-                        <field name="allowed_group_ids" widget="many2many_tags"/>
-                    </tree>
-                </field>
             </group>
         </xpath>
         <xpath expr="//notebook" position="inside">
