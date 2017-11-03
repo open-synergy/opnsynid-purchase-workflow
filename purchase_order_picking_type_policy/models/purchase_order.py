@@ -20,7 +20,7 @@ class PurchaseOrder(models.Model):
         for po in self:
             if po.order_type.limit_picking_type_on_po:
                 po.allowed_picking_type_ids = \
-                    po.order_type_id.allowed_picking_type_ids
+                    po.order_type.allowed_picking_type_ids
             else:
                 criteria = [
                     ("code", "=", "incoming"),
