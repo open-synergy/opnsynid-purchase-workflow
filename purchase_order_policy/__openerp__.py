@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Purchase Order Policy",
-    "version": "8.0.2.0.3",
+    "version": "8.0.2.0.4",
     "category": "Purchase Management",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
