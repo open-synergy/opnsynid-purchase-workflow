@@ -8,6 +8,11 @@ from openerp import models, fields
 class PurchaseOrderType(models.Model):
     _inherit = "purchase.order.type"
 
+    sequence_id = fields.Many2one(
+        string="Sequence",
+        comodel_name="ir.sequence",
+        company_dependent=True,
+    )
     request_group_ids = fields.Many2many(
         string="Allowed to Request Approval",
         comodel_name="res.groups",

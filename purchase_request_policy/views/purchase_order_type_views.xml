@@ -9,6 +9,7 @@
                 <xpath expr="//notebook" position="inside">
                     <page name="page_purchase_request" string="Purchase Request Policy">
                         <group name="grp_policy" string="Purchase Request Workflow Button Policy" colspan="4" col="2" groups="base.group_system">
+                            <field name="sequence_id"/>
                             <field name="request_group_ids" widget="many2many_tags"/>
                             <field name="approve_group_ids" widget="many2many_tags"/>
                             <field name="reject_group_ids" widget="many2many_tags"/>

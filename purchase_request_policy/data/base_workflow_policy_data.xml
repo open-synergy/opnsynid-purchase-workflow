@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+    <data>
+        <!-- Purchase Request -->
+        <record id="base_workflow_purchase_workflow" model="base.workflow_policy">
+            <field name="model_id" ref="purchase_request.model_purchase_request"/>
+        </record>
+        <record id="base_workflow_line_purchase_request_approval" model="base.workflow_policy_line">
+            <field name="workflow_id" ref="base_workflow_purchase_workflow"/>
+            <field name="field_id" search="[('model_id.model','=','purchase.request'),('name','=','request_ok')]"/>
+            <field name="python_code">result = document.order_type_id.request_group_ids.ids</field>
+        </record>
+        <record id="base_workflow_line_purchase_request_approve" model="base.workflow_policy_line">
+            <field name="workflow_id" ref="base_workflow_purchase_workflow"/>
+            <field name="field_id" search="[('model_id.model','=','purchase.request'),('name','=','approve_ok')]"/>
+            <field name="python_code">result = document.order_type_id.approve_group_ids.ids</field>
+        </record>
+        <record id="base_workflow_line_purchase_request_reject" model="base.workflow_policy_line">
+            <field name="workflow_id" ref="base_workflow_purchase_workflow"/>
+            <field name="field_id" search="[('model_id.model','=','purchase.request'),('name','=','reject_ok')]"/>
+            <field name="python_code">result = document.order_type_id.reject_ok.ids</field>
+        </record>
+        <record id="base_workflow_line_purchase_request_reset" model="base.workflow_policy_line">
+            <field name="workflow_id" ref="base_workflow_purchase_workflow"/>
+            <field name="field_id" search="[('model_id.model','=','purchase.request'),('name','=','reset_ok')]"/>
+            <field name="python_code">result = document.order_type_id.reset_ok.ids</field>
+        </record>
+    </data>
+</openerp>
