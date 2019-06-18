@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Opensynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+
+<record id="purchase_order_analysis_view_search" model="ir.ui.view">
+    <field name="name">purchase.order.analysis.form</field>
+    <field name="model">purchase.order_analysis</field>
+    <field name="arch" type="xml">
+        <search>
+            <filter string="Quotations" name="quotes" domain="[('state','=','draft')]"/>
+            <filter string="Orders" name="orders" domain="[('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]"/>
+            <field name="partner_id"/>
+            <field name="product_id"/>
+            <filter name="dom_empty" string="Empty" domain="[('id','=',0)]"/>
+            <group name="filter_purchase_state" string="Purchase Order State">
+                <filter name="dom_state_draft" string="Draft PO" domain="[('state','=','draft')]"/>
+                <filter name="dom_state_sent" string="RFQ" domain="[('state','=','sent')]"/>
+                <filter name="dom_state_bid" string="Bid Received" domain="[('state','=','bid')]"/>
+                <filter name="dom_state_confirmed" string="Waiting Approval" domain="[('state','=','confirmed')]"/>
+                <filter name="dom_state_approved" string="Purchase Confirmed" domain="[('state','=','approved')]"/>
+                <filter name="dom_state_except_picking" string="Shipping Exception" domain="[('state','=','except_picking')]"/>
+                <filter name="dom_state_except_invoice" string="Invoice Exception" domain="[('state','=','except_invoice')]"/>
+                <filter name="dom_state_done" string="Done" domain="[('state','=','done')]"/>
+                <filter name="dom_state_cancel" string="Cancelled" domain="[('state','=','cancel')]"/>
+            </group>
+            <group name="filter_date" string="Order Date">
+                <filter string="01" domain="[('date','&gt;=', datetime.date(context_today().year,1,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,1,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="02" domain="[('date','&gt;=', datetime.date(context_today().year,2,1).strftime('%Y-%m-%d')), ('date','&lt;=', (datetime.date(context_today().year,2,1) + relativedelta(months=1) + relativedelta(days=-1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="03" domain="[('date','&gt;=', datetime.date(context_today().year,3,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,3,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="04" domain="[('date','&gt;=', datetime.date(context_today().year,4,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,4,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="05" domain="[('date','&gt;=', datetime.date(context_today().year,5,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,5,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="06" domain="[('date','&gt;=', datetime.date(context_today().year,6,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,6,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="07" domain="[('date','&gt;=', datetime.date(context_today().year,7,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,7,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="08" domain="[('date','&gt;=', datetime.date(context_today().year,8,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,8,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="09" domain="[('date','&gt;=', datetime.date(context_today().year,9,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,9,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="10" domain="[('date','&gt;=', datetime.date(context_today().year,10,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,10,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="11" domain="[('date','&gt;=', datetime.date(context_today().year,11,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,11,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="12" domain="[('date','&gt;=', datetime.date(context_today().year,12,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,12,31).strftime('%Y-%m-%d'))]"/>
+            </group>
+            <group name="filter_date_approve" string="Date Approved">
+                <filter string="01" domain="[('date_approve','&gt;=', datetime.date(context_today().year,1,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,1,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="02" domain="[('date_approve','&gt;=', datetime.date(context_today().year,2,1).strftime('%Y-%m-%d')), ('date','&lt;=', (datetime.date(context_today().year,2,1) + relativedelta(months=1) + relativedelta(days=-1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="03" domain="[('date_approve','&gt;=', datetime.date(context_today().year,3,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,3,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="04" domain="[('date_approve','&gt;=', datetime.date(context_today().year,4,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,4,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="05" domain="[('date_approve','&gt;=', datetime.date(context_today().year,5,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,5,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="06" domain="[('date_approve','&gt;=', datetime.date(context_today().year,6,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,6,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="07" domain="[('date_approve','&gt;=', datetime.date(context_today().year,7,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,7,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="08" domain="[('date_approve','&gt;=', datetime.date(context_today().year,8,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,8,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="09" domain="[('date_approve','&gt;=', datetime.date(context_today().year,9,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,9,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="10" domain="[('date_approve','&gt;=', datetime.date(context_today().year,10,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,10,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="11" domain="[('date_approve','&gt;=', datetime.date(context_today().year,11,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,11,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="12" domain="[('date_approve','&gt;=', datetime.date(context_today().year,12,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,12,31).strftime('%Y-%m-%d'))]"/>
+            </group>
+            <group name="filter_expected_date" string="Expected Date">
+                <filter string="01" domain="[('expected_date','&gt;=', datetime.date(context_today().year,1,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,1,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="02" domain="[('expected_date','&gt;=', datetime.date(context_today().year,2,1).strftime('%Y-%m-%d')), ('date','&lt;=', (datetime.date(context_today().year,2,1) + relativedelta(months=1) + relativedelta(days=-1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="03" domain="[('expected_date','&gt;=', datetime.date(context_today().year,3,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,3,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="04" domain="[('expected_date','&gt;=', datetime.date(context_today().year,4,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,4,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="05" domain="[('expected_date','&gt;=', datetime.date(context_today().year,5,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,5,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="06" domain="[('expected_date','&gt;=', datetime.date(context_today().year,6,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,6,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="07" domain="[('expected_date','&gt;=', datetime.date(context_today().year,7,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,7,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="08" domain="[('expected_date','&gt;=', datetime.date(context_today().year,8,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,8,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="09" domain="[('expected_date','&gt;=', datetime.date(context_today().year,9,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,9,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="10" domain="[('expected_date','&gt;=', datetime.date(context_today().year,10,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,10,31).strftime('%Y-%m-%d'))]"/>
+                <filter string="11" domain="[('expected_date','&gt;=', datetime.date(context_today().year,11,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,11,30).strftime('%Y-%m-%d'))]"/>
+                <filter string="12" domain="[('expected_date','&gt;=', datetime.date(context_today().year,12,1).strftime('%Y-%m-%d')), ('date','&lt;=', datetime.date(context_today().year,12,31).strftime('%Y-%m-%d'))]"/>
+            </group>
+
+            <group name="row_grp" string="Row Grouping">
+                <filter name="row_grp_product_id" string="Product" context="{'group_by':'product_id'}"/>
+                <filter name="row_grp_picking_type_id" string="Warehouse" context="{'group_by':'picking_type_id'}"/>
+                <filter name="row_grp_location_id" string="Location" context="{'group_by':'location_id'}"/>
+                <filter name="row_grp_partner_id" string="Supplier" context="{'group_by':'partner_id'}"/>
+                <filter name="row_grp_pricelist_id" string="Pricelist" context="{'group_by':'pricelist_id'}"/>
+                <filter name="row_grp_validator" string="Validated By" context="{'group_by':'validator'}"/>
+                <filter name="row_grp_product_uom" string="Reference Unit of Measure" context="{'group_by':'product_uom'}"/>
+                <filter name="row_grp_user_id" string="Responsible" context="{'group_by':'user_id'}"/>
+                <filter name="row_grp_category_id" string="Product Category" context="{'group_by':'category_id'}"/>
+                <filter name="row_grp_company" string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                <!-- ORDER DATE -->
+                <filter name="row_grp_date_year" string="Order Date by Year" context="{'group_by':'date:year'}"/>
+                <filter name="row_grp_date_month" string="Order Date by Month" context="{'group_by':'date:month'}"/>
+                <filter name="row_grp_date_week" string="Order Date by Week" context="{'group_by':'date:week'}"/>
+                <filter name="row_grp_date_day" string="Order Date by Day" context="{'group_by':'date:day'}"/>
+                <!-- DATE APPROVED -->
+                <filter name="row_grp_date_approve_year" string="Date Approved by Year" context="{'group_by':'date_approve:year'}"/>
+                <filter name="row_grp_date_approve_month" string="Date Approved by Month" context="{'group_by':'date_approve:month'}"/>
+                <filter name="row_grp_date_approve_week" string="Date Approved by Week" context="{'group_by':'date_approve:week'}"/>
+                <filter name="row_grp_date_approve_day" string="Date Approved by Day" context="{'group_by':'date_approve:day'}"/>
+                <!-- EXPECTED DATE -->
+                <filter name="row_grp_expected_date_year" string="Expected Date by Year" context="{'group_by':'expected_date:year'}"/>
+                <filter name="row_grp_expected_date_month" string="Expected Date by Month" context="{'group_by':'expected_date:month'}"/>
+                <filter name="row_grp_expected_date_week" string="Expected Date by Week" context="{'group_by':'expected_date:week'}"/>
+                <filter name="row_grp_expected_date_day" string="Expected Date by Day" context="{'group_by':'expected_date:day'}"/>
+            </group>
+            <group name="col_grp" string="Col Grouping">
+                <filter name="col_grp_product_id" string="Product" context="{'col_group_by':'product_id'}"/>
+                <filter name="col_grp_picking_type_id" string="Warehouse" context="{'col_group_by':'picking_type_id'}"/>
+                <filter name="col_grp_location_id" string="Location" context="{'col_group_by':'location_id'}"/>
+                <filter name="col_grp_partner_id" string="Supplier" context="{'col_group_by':'partner_id'}"/>
+                <filter name="col_grp_pricelist_id" string="Pricelist" context="{'col_group_by':'pricelist_id'}"/>
+                <filter name="col_grp_validator" string="Validated By" context="{'col_group_by':'validator'}"/>
+                <filter name="col_grp_product_uom" string="Reference Unit of Measure" context="{'col_group_by':'product_uom'}"/>
+                <filter name="col_grp_user_id" string="Responsible" context="{'col_group_by':'user_id'}"/>
+                <filter name="col_grp_category_id" string="Product Category" context="{'col_group_by':'category_id'}"/>
+                <filter name="col_grp_company" string="Company" context="{'col_group_by':'company_id'}" groups="base.group_multi_company"/>
+                <!-- ORDER DATE -->
+                <filter name="col_grp_date_year" string="Order Date by Year" context="{'col_group_by':'date:year'}"/>
+                <filter name="col_grp_date_month" string="Order Date by Month" context="{'col_group_by':'date:month'}"/>
+                <filter name="col_grp_date_week" string="Order Date by Week" context="{'col_group_by':'date:week'}"/>
+                <filter name="col_grp_date_day" string="Order Date by Day" context="{'col_group_by':'date:day'}"/>
+                <!-- DATE APPROVED -->
+                <filter name="col_grp_date_approve_year" string="Date Approved by Year" context="{'col_group_by':'date_approve:year'}"/>
+                <filter name="col_grp_date_approve_month" string="Date Approved by Month" context="{'col_group_by':'date_approve:month'}"/>
+                <filter name="col_grp_date_approve_week" string="Date Approved by Week" context="{'col_group_by':'date_approve:week'}"/>
+                <filter name="col_grp_date_approve_day" string="Date Approved by Day" context="{'col_group_by':'date_approve:day'}"/>
+                <!-- EXPECTED DATE -->
+                <filter name="col_grp_expected_date_year" string="Expected Date by Year" context="{'col_group_by':'expected_date:year'}"/>
+                <filter name="col_grp_expected_date_month" string="Expected Date by Month" context="{'col_group_by':'expected_date:month'}"/>
+                <filter name="col_grp_expected_date_week" string="Expected Date by Week" context="{'col_group_by':'expected_date:week'}"/>
+                <filter name="col_grp_expected_date_day" string="Expected Date by Day" context="{'col_group_by':'expected_date:day'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="purchase_order_analysis_view_graph" model="ir.ui.view">
+    <field name="name">purchase.order.analysis.graph</field>
+    <field name="model">purchase.order_analysis</field>
+    <field name="arch" type="xml">
+        <graph string="Purchase Orders Statistics" type="pivot">
+            <field name="price_total" type="measure"/>
+            <field name="quantity" type="measure"/>
+            <field name="price_average" type="measure"/>
+        </graph>
+    </field>
+</record>
+
+<record id="purchase_order_analysis_action" model="ir.actions.act_window">
+    <field name="name">Purchase Order Analysis</field>
+    <field name="res_model">purchase.order_analysis</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">graph</field>
+    <field name="context">{'search_default_dom_empty':1}</field>
+    <field name="view_id" ref="purchase_order_analysis_view_graph"/>
+    <field name="search_view_id" ref="purchase_order_analysis_view_search"/>
+</record>
+
+<menuitem
+    id="purchase_order_analysis_menu"
+    name="Purchase Order Analysis"
+    parent="base.next_id_73"
+    action="purchase_order_analysis_action"
+    sequence="1"
+    />
+
+</data>
+</openerp>
