@@ -50,6 +50,11 @@ class PurchaseOrderAnalysis(models.Model):
         readonly=True,
         comodel_name="res.partner"
     )
+    commercial_partner_id = fields.Many2one(
+        string="Supplier Commercial Partner",
+        readonly=True,
+        comodel_name="res.partner"
+    )
     pricelist_id = fields.Many2one(
         string="Pricelist",
         readonly=True,
@@ -136,6 +141,7 @@ class PurchaseOrderAnalysis(models.Model):
             a.picking_type_id as picking_type_id,
             a.location_id as location_id,
             a.partner_id as partner_id,
+            b.commercial_partner_id as commercial_partner_id,
             a.pricelist_id as pricelist_id,
             a.date_approve as date_approve,
             a.expected_date as expected_date,
@@ -169,6 +175,8 @@ class PurchaseOrderAnalysis(models.Model):
 
     def _join(self):
         join_str = """
+        JOIN res_partner AS b
+            ON a.partner_id = b.id
         """
         return join_str
 

@@ -6,13 +6,14 @@
 <data>
 
 <record id="purchase_order_analysis_view_search" model="ir.ui.view">
-    <field name="name">purchase.order.analysis.form</field>
+    <field name="name">purchase.order_analysis form</field>
     <field name="model">purchase.order_analysis</field>
     <field name="arch" type="xml">
         <search>
             <filter string="Quotations" name="quotes" domain="[('state','=','draft')]"/>
             <filter string="Orders" name="orders" domain="[('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]"/>
             <field name="partner_id"/>
+            <field name="commercial_partner_id"/>
             <field name="product_id"/>
             <filter name="dom_empty" string="Empty" domain="[('id','=',0)]"/>
             <group name="filter_purchase_state" string="Purchase Order State">
@@ -74,6 +75,7 @@
                 <filter name="row_grp_picking_type_id" string="Warehouse" context="{'group_by':'picking_type_id'}"/>
                 <filter name="row_grp_location_id" string="Location" context="{'group_by':'location_id'}"/>
                 <filter name="row_grp_partner_id" string="Supplier" context="{'group_by':'partner_id'}"/>
+                <filter name="row_grp_commercial_partner_id" string="Supplier Commercial Partner" context="{'group_by':'commercial_partner_id'}"/>
                 <filter name="row_grp_pricelist_id" string="Pricelist" context="{'group_by':'pricelist_id'}"/>
                 <filter name="row_grp_validator" string="Validated By" context="{'group_by':'validator'}"/>
                 <filter name="row_grp_product_uom" string="Reference Unit of Measure" context="{'group_by':'product_uom'}"/>
@@ -101,6 +103,7 @@
                 <filter name="col_grp_picking_type_id" string="Warehouse" context="{'col_group_by':'picking_type_id'}"/>
                 <filter name="col_grp_location_id" string="Location" context="{'col_group_by':'location_id'}"/>
                 <filter name="col_grp_partner_id" string="Supplier" context="{'col_group_by':'partner_id'}"/>
+                <filter name="col_grp_commercial_partner_id" string="Supplier Commercial Partner" context="{'col_group_by':'commercial_partner_id'}"/>
                 <filter name="col_grp_pricelist_id" string="Pricelist" context="{'col_group_by':'pricelist_id'}"/>
                 <filter name="col_grp_validator" string="Validated By" context="{'col_group_by':'validator'}"/>
                 <filter name="col_grp_product_uom" string="Reference Unit of Measure" context="{'col_group_by':'product_uom'}"/>
@@ -128,7 +131,7 @@
 </record>
 
 <record id="purchase_order_analysis_view_graph" model="ir.ui.view">
-    <field name="name">purchase.order.analysis.graph</field>
+    <field name="name">purchase.order_analysis graph</field>
     <field name="model">purchase.order_analysis</field>
     <field name="arch" type="xml">
         <graph string="Purchase Orders Statistics" type="pivot">
