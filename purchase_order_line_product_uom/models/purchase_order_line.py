@@ -35,7 +35,11 @@ class PurchaseOrderLine(models.Model):
     def _compute_product_uom_qty(self):
         for document in self:
             document.product_uom_qty = 0.0
-            if document.product_uom_id and document.product_uom:
+            product_uom = document.product_uom_id
+            line_uom = document.product_uom
+            if product_uom and \
+                    line_uom and \
+                    product_uom.category_id.id == line_uom.category_id.id:
                 document.product_uom_qty =\
                     document.product_uom_id._compute_qty(
                         from_uom_id=document.product_uom.id,
