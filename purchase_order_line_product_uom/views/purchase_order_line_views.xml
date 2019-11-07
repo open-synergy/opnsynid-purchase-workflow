@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+<record id="purchase_order_line_view_form" model="ir.ui.view">
+    <field name="name">purchase.order.line.product.uom.form</field>
+    <field name="model">purchase.order.line</field>
+    <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//field[@name='product_uom']" position="after">
+          <field name="product_uom_qty"/>
+          <field name="product_uom_id"/>
+      </xpath>
+      <xpath expr="//field[@name='product_uom']" position="attributes">
+          <attribute name="string">Unit Of Measure</attribute>
+      </xpath>
+    </field>
+</record>
+
+</data>
+</openerp>
