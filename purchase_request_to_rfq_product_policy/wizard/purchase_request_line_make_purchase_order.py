@@ -18,8 +18,10 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
             order_type = obj_type.browse(order_type_id)
             if order_type.limit_product_selection:
                 res.update({
-                    "all_allowed_product_ids": [
-                        (6, 0, order_type.all_allowed_product_ids.ids)],
+                    "allowed_product_ids": [
+                        (6, 0, order_type.allowed_product_ids.ids)],
+                    "allowed_product_categ_ids": [
+                        (6, 0, order_type.allowed_product_categ_ids.ids)],
                 })
             else:
                 obj_product = self.env["product.product"]
@@ -27,7 +29,7 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
                     ("purchase_ok", "=", True),
                 ]
                 res.update({
-                    "all_allowed_product_ids": [
+                    "allowed_product_ids": [
                         (6, 0, obj_product.search(criteria).ids)],
                 })
         return res
@@ -36,28 +38,36 @@ class PurchaseRequestLineMakePurchaseOrder(models.TransientModel):
 class PurchaseRequestLineMakePurchaseOrderItem(models.TransientModel):
     _inherit = "purchase.request.line.make.purchase.order.item"
 
+    @api.multi
     @api.depends(
         "line_id",
         "line_id.request_id",
         "line_id.request_id.order_type_id",
-        "line_id.request_id.order_type_id.all_allowed_product_ids")
-    def _compute_all_allowed_product_ids(self):
+    )
+    def _compute_allowed_product(self):
         obj_product = self.env["product.product"]
-        for line in self:
-            if line.line_id.request_id.order_type_id.limit_product_selection:
-                line.all_allowed_product_ids = \
-                    line.line_id.request_id.order_type_id.\
-                    all_allowed_product_ids
-            else:
-                criteria = [
-                    ("purchase_ok", "=", True),
-                ]
-                line.all_allowed_product_ids = \
-                    obj_product.search(criteria)
+        for document in self:
+            type_id =\
+                document.line_id.request_id.order_type_id
 
-    all_allowed_product_ids = fields.Many2many(
-        string="All Allowed Product",
+            if type_id.limit_product_selection:
+                document.allowed_product_ids = \
+                    type_id.allowed_product_ids.ids
+                document.allowed_product_categ_ids = \
+                    type_id.allowed_product_categ_ids.ids
+            else:
+                document.allowed_product_ids = \
+                    obj_product.search([("purchase_ok", "=", True)])
+
+    allowed_product_ids = fields.Many2many(
+        string="Allowed Products",
         comodel_name="product.product",
-        compute="_compute_all_allowed_product_ids",
+        compute="_compute_allowed_product",
+        store=False,
+    )
+    allowed_product_categ_ids = fields.Many2many(
+        string="Allowed Product Categories",
+        comodel_name="product.category",
+        compute="_compute_allowed_product",
         store=False,
     )
