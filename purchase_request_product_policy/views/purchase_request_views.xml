@@ -11,12 +11,12 @@
     <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
     <field name="arch" type="xml">
         <xpath expr="//field[@name='picking_type_id']" position="after">
-            <field name="all_allowed_product_ids" invisible="1"/>
+          <field name="allowed_product_categ_ids" widget="many2many_tags" invisible="1"/>
+          <field name="allowed_product_ids" widget="many2many_tags" invisible="1"/>
         </xpath>
 
         <xpath expr="//field[@name='line_ids']/form//field[@name='product_id']" position="attributes">
-            <attribute name="domain">[('id', 'in', parent.all_allowed_product_ids[0][2])]</attribute>
-
+            <attribute name="domain">['|',('id','in',parent.allowed_product_ids[0][2]),('categ_id','in',parent.allowed_product_categ_ids[0][2])]</attribute>
         </xpath>
     </field>
 </record>
