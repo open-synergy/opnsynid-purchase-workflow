@@ -16,8 +16,8 @@ class PurchaseOrderLine(models.Model):
         obj_product_uom =\
             self.env["product.uom"]
         for document in self:
+            uom_po_id = document.product_id.uom_po_id.id
             if document.product_id:
-                uom_po_id = document.product_id.uom_po_id.id
                 if document.product_id.limit_product_uom_selection:
                     allowed_purchase_uom_ids =\
                         document.product_id.allowed_purchase_uom_ids.ids
