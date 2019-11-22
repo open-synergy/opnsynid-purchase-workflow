@@ -16,18 +16,18 @@ class PurchaseOrderLine(models.Model):
         obj_product_uom =\
             self.env["product.uom"]
         for document in self:
-            uom_po_id = document.product_id.uom_po_id.id
+            uom_po = document.product_id.uom_po_id
             if document.product_id:
                 if document.product_id.limit_product_uom_selection:
                     allowed_purchase_uom_ids =\
                         document.product_id.allowed_purchase_uom_ids.ids
-                    if uom_po_id not in allowed_purchase_uom_ids:
-                        allowed_purchase_uom_ids.append(uom_po_id)
+                    if uom_po.id not in allowed_purchase_uom_ids:
+                        allowed_purchase_uom_ids.append(uom_po.id)
                     document.allowed_purchase_uom_ids =\
                         allowed_purchase_uom_ids
                 else:
                     category_id =\
-                        uom_po_id.category_id.id
+                        uom_po.category_id.id
                     criteria = [
                         ("category_id", "=", category_id)
                     ]
