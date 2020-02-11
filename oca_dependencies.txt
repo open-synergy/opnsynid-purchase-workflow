@@ -15,3 +15,4 @@
 # sale-workflow https://github.com/OCA/sale-workflow branchname
 
 purchase-workflow https://github.com/OCA/purchase-workflow 8.0
+opnsynid-server-tools https://github.com/open-synergy/opnsynid-server-tools 8.0
