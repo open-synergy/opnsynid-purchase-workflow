@@ -12,6 +12,8 @@
         <search>
             <filter string="Quotations" name="quotes" domain="[('state','=','draft')]"/>
             <filter string="Orders" name="orders" domain="[('state','&lt;&gt;','draft'),('state','&lt;&gt;','cancel')]"/>
+            <filter string="Received" name="receive" domain="[('shipped','=',1)]"/>
+            <filter string="Un-Received" name="unreceived" domain="[('shipped','=',0)]"/>
             <field name="partner_id"/>
             <field name="commercial_partner_id"/>
             <field name="product_id"/>
@@ -71,6 +73,7 @@
             </group>
 
             <group name="row_grp" string="Row Grouping">
+                <filter name="row_grp_order_id" string="#PO" context="{'group_by':'order_id'}"/>
                 <filter name="row_grp_product_id" string="Product" context="{'group_by':'product_id'}"/>
                 <filter name="row_grp_picking_type_id" string="Warehouse" context="{'group_by':'picking_type_id'}"/>
                 <filter name="row_grp_location_id" string="Location" context="{'group_by':'location_id'}"/>
@@ -99,6 +102,7 @@
                 <filter name="row_grp_expected_date_day" string="Expected Date by Day" context="{'group_by':'expected_date:day'}"/>
             </group>
             <group name="col_grp" string="Col Grouping">
+                <filter name="col_grp_order_id" string="#PO" context="{'col_group_by':'order_id'}"/>
                 <filter name="col_grp_product_id" string="Product" context="{'col_group_by':'product_id'}"/>
                 <filter name="col_grp_picking_type_id" string="Warehouse" context="{'col_group_by':'picking_type_id'}"/>
                 <filter name="col_grp_location_id" string="Location" context="{'col_group_by':'location_id'}"/>
