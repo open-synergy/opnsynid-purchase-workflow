@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="purchase_order_view_form" model="ir.ui.view">
+            <field name="name">purchase.order.multiple.approval.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,bid,confirmed,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue"}' readonly="1"/>
+                </xpath>
+                <xpath expr="//button[@name='purchase_approve']" position="before">
+                    <button name="request_validation"
+                        string="Request Validation"
+                        attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirmed'])]}"
+                        type="object"/>
+                    <button name="restart_validation"
+                        string="Restart Validation"
+                        attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['confirmed'])]}"
+                        type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='purchase_approve']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel_draft']" position="attributes">
+                    <attribute name="states">cancel</attribute>
+                </xpath>
+                <xpath expr="//header" position="after">
+                    <field name="need_validation" invisible="1"/>
+                    <field name="validated" invisible="1"/>
+                    <field name="rejected" invisible="1"/>
+                    <div class="alert alert-warning"
+                         attrs="{'invisible': ['|', '|', '|',
+                         ('validated', '=', True), ('state', 'not in', ['confirmed']),
+                         ('rejected', '=', True), ('review_ids', '=', [])]}"
+                         style="margin-bottom:0px;">
+                        <p><i class="fa fa-info-circle"/>This Purchase needs to be
+                            validated.
+                            <button name="validate_tier"
+                                string="Validate"
+                                attrs="{'invisible': [('review_ids', '=', [])]}"
+                                type="object"
+                                class="oe_inline oe_button btn-success"
+                                icon="terp-check"/>
+                            <button name="reject_tier"
+                                string="Reject"
+                                type="object"
+                                class="btn-icon btn-danger"
+                                icon="terp-gtk-stop"/>
+                        </p>
+                    </div>
+                    <div class="alert alert-success"
+                         attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirmed']), ('review_ids', '=', [])]}"
+                         style="margin-bottom:0px;">
+                        <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
+                    </div>
+                    <div class="alert alert-danger"
+                         attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirmed']), ('review_ids', '=', [])]}"
+                         style="margin-bottom:0px;">
+                        <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
+                    </div>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Reviews" name="tier_validation">
+                        <group>
+                            <field name="definition_id"/>
+                            <field name="reviewer_partner_ids" widget="many2many_tags"/>
+                            <field name="review_ids" readonly="1"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="purchase_order_view_search" model="ir.ui.view">
+            <field name="name">purchase.order.multiple.approval.search</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_uid']" position="after">
+                    <filter name="needs_review" string="Needs my Review"
+                            domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
+                            help="My Purchase to review"/>
+                    <filter name="tier_validated" string="Validated"
+                            domain="[('validated', '=', True)]"
+                            help="Purchase validated"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>
