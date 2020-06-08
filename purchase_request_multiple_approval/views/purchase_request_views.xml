@@ -6,6 +6,9 @@
             <field name="model">purchase.request</field>
             <field name="inherit_id" ref="purchase_request.view_purchase_request_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_approved']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
                 <xpath expr="//button[@name='button_draft']" position="before">
                     <button name="request_validation"
                         string="Request Validation"
@@ -25,7 +28,7 @@
                          ('validated', '=', True), ('state', 'not in', ['to_approve']),
                          ('rejected', '=', True), ('review_ids', '=', [])]}"
                          style="margin-bottom:0px;">
-                        <p><i class="fa fa-info-circle"/>This Expense needs to be
+                        <p><i class="fa fa-info-circle"/>This Purchase Request needs to be
                             validated.
                             <button name="validate_tier"
                                 string="Validate"
@@ -55,6 +58,7 @@
                     <page string="Reviews" name="tier_validation">
                         <group>
                             <field name="definition_id"/>
+                            <field name="reviewer_partner_ids" widget="many2many_tags"/>
                             <field name="review_ids" readonly="1"/>
                         </group>
                     </page>
@@ -70,10 +74,10 @@
                 <xpath expr="//filter[@name='state_rejected']" position="after">
                     <filter name="needs_review" string="Needs my Review"
                             domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
-                            help="My Expense to review"/>
+                            help="My Purchase Request to review"/>
                     <filter name="tier_validated" string="Validated"
                             domain="[('validated', '=', True)]"
-                            help="Expense validated and ready to be draft"/>
+                            help="Purchase Request validated and ready to be draft"/>
                 </xpath>
             </field>
         </record>
