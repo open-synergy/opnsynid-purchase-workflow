@@ -6,15 +6,21 @@
             <field name="model">purchase.order</field>
             <field name="inherit_id" ref="purchase.purchase_order_form"/>
             <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,bid,confirmed,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue"}' readonly="1"/>
+                </xpath>
                 <xpath expr="//button[@name='purchase_approve']" position="before">
                     <button name="request_validation"
                         string="Request Validation"
-                        attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['draft'])]}"
+                        attrs="{'invisible': ['|','|',('need_validation', '!=', True),('rejected','=',True),('state','not in',['confirmed'])]}"
                         type="object"/>
                     <button name="restart_validation"
                         string="Restart Validation"
-                        attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['draft'])]}"
+                        attrs="{'invisible': ['|','|',('review_ids', '=', []),('rejected','=',False),('state','not in',['confirmed'])]}"
                         type="object"/>
+                </xpath>
+                <xpath expr="//button[@name='purchase_approve']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
                 <xpath expr="//header" position="after">
                     <field name="need_validation" invisible="1"/>
@@ -22,10 +28,10 @@
                     <field name="rejected" invisible="1"/>
                     <div class="alert alert-warning"
                          attrs="{'invisible': ['|', '|', '|',
-                         ('validated', '=', True), ('state', 'not in', ['draft']),
+                         ('validated', '=', True), ('state', 'not in', ['confirmed']),
                          ('rejected', '=', True), ('review_ids', '=', [])]}"
                          style="margin-bottom:0px;">
-                        <p><i class="fa fa-info-circle"/>This Expense needs to be
+                        <p><i class="fa fa-info-circle"/>This Purchase needs to be
                             validated.
                             <button name="validate_tier"
                                 string="Validate"
@@ -41,12 +47,12 @@
                         </p>
                     </div>
                     <div class="alert alert-success"
-                         attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['draft']), ('review_ids', '=', [])]}"
+                         attrs="{'invisible': ['|', '|', ('validated', '!=', True), ('state', 'not in', ['confirmed']), ('review_ids', '=', [])]}"
                          style="margin-bottom:0px;">
                         <p><i class="fa fa-thumbs-up"/> Operation has been <b>validated</b>!</p>
                     </div>
                     <div class="alert alert-danger"
-                         attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['draft']), ('review_ids', '=', [])]}"
+                         attrs="{'invisible': ['|', '|', ('rejected', '!=', True), ('state', 'not in', ['confirmed']), ('review_ids', '=', [])]}"
                          style="margin-bottom:0px;">
                         <p><i class="fa fa-thumbs-down"/> Operation has been <b>rejected</b>.</p>
                     </div>
@@ -55,6 +61,7 @@
                     <page string="Reviews" name="tier_validation">
                         <group>
                             <field name="definition_id"/>
+                            <field name="reviewer_partner_ids" widget="many2many_tags"/>
                             <field name="review_ids" readonly="1"/>
                         </group>
                     </page>
@@ -70,10 +77,10 @@
                 <xpath expr="//field[@name='create_uid']" position="after">
                     <filter name="needs_review" string="Needs my Review"
                             domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
-                            help="My Expense to review"/>
+                            help="My Purchase to review"/>
                     <filter name="tier_validated" string="Validated"
                             domain="[('validated', '=', True)]"
-                            help="Expense validated and ready to be draft"/>
+                            help="Purchase validated"/>
                 </xpath>
             </field>
         </record>

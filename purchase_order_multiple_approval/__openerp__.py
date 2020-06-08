@@ -18,6 +18,7 @@
         "base_multiple_approval",
     ],
     "data": [
+        "workflow/purchase_order_workflow.xml",
         "views/purchase_order_views.xml",
     ],
 }
