@@ -22,6 +22,9 @@
                 <xpath expr="//button[@name='purchase_approve']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//button[@name='action_cancel_draft']" position="attributes">
+                    <attribute name="states">cancel</attribute>
+                </xpath>
                 <xpath expr="//header" position="after">
                     <field name="need_validation" invisible="1"/>
                     <field name="validated" invisible="1"/>
