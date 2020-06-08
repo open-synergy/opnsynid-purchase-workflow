@@ -9,6 +9,9 @@
                 <xpath expr="//button[@name='button_approved']" position="attributes">
                     <attribute name="invisible">1</attribute>
                 </xpath>
+                <xpath expr="//button[@name='button_draft']" position="attributes">
+                    <attribute name="states">rejected</attribute>
+                </xpath>
                 <xpath expr="//button[@name='button_draft']" position="before">
                     <button name="request_validation"
                         string="Request Validation"
@@ -73,7 +76,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//filter[@name='state_rejected']" position="after">
                     <filter name="needs_review" string="Needs my Review"
-                            domain="[('reviewer_ids','in',uid), ('state', 'not in', ['done', 'cancel'])]"
+                            domain="[('reviewer_ids','in',uid), ('state', 'not in', ['approved', 'rejected'])]"
                             help="My Purchase Request to review"/>
                     <filter name="tier_validated" string="Validated"
                             domain="[('validated', '=', True)]"

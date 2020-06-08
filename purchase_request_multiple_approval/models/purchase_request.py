@@ -18,6 +18,7 @@ class PurchaseRequest(models.Model):
     _state_to = [
         "approved",
     ]
+    _cancel_state = "rejected"
 
     @api.multi
     def button_to_approve(self):
