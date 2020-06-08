@@ -37,7 +37,7 @@ class PurchaseOrder(models.Model):
         readonly=True,
         select=True,
         copy=False,
-      )
+    )
 
     @api.multi
     def wkf_confirm_order(self):
