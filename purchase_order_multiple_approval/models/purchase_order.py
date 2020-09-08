@@ -59,7 +59,7 @@ class PurchaseOrder(models.Model):
         _super.validate_tier()
         for document in self:
             if document.validated:
-                document.wkf_approve_order()
+                document.signal_workflow("purchase_approve")
 
     @api.multi
     def restart_validation(self):

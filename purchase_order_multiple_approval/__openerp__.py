@@ -6,7 +6,7 @@
     "name": "Purchase Order Multiple Approval",
     "summary": "Implement a multiple approval process based on tiers "
                "for Purchase Order",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.0.1",
     "category": "Purchase Management",
     "website": "https://simetri-sinergi.id",
     "author": "PT. Simetri Sinergi Indonesia, OpenSynergy Indonesia",
